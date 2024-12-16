@@ -1,59 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TextInput,
   View,
+  Button,
+  useColorScheme,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,57 +19,92 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // State and Constants for Twitter-like validation
+  const MAX_CHARACTERS = 280;
+  const [text, setText] = useState('');
+  const charactersLeft = MAX_CHARACTERS - text.length;
+  const isValid = text.length > 0 && text.length <= MAX_CHARACTERS;
+
+  // Split text into two parts
+  const mainText = text.slice(0, MAX_CHARACTERS); // Text within the limit
+  const extraText = text.slice(MAX_CHARACTERS);  // Text beyond the limit
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={[backgroundStyle, styles.container]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <Text style={styles.title}>Twitter-like Post Validation</Text>
+
+      {/* Single TextInput for all text */}
+      <TextInput
+        style={[
+          styles.textInput,
+          extraText.length > 0 && styles.textInputError, // Apply error styling if text exceeds 280
+        ]}
+        multiline
+        maxLength={MAX_CHARACTERS + 10} // Allow extra input to show feedback
+        placeholder="What's happening?"
+        value={text}
+        onChangeText={setText}
+      />
+
+      <View style={styles.footer}>
+        <Text 
+          style={[
+            styles.characterCount,
+            text.length > MAX_CHARACTERS && styles.characterCountError
+          ]}
+        >
+          {charactersLeft} characters left
+        </Text>
+        <Button
+          title="Post"
+          onPress={() => alert('Post submitted!')}
+          disabled={!isValid}
+        />
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    padding: 16,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  textInput: {
+    flex: 1,
+    borderColor: '#ced4da',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#fff',
+    marginBottom: 8,
   },
-  highlight: {
-    fontWeight: '700',
+  textInputError: {
+    backgroundColor: '#ffebee', // Light red background when characters exceed 280
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  characterCount: {
+    fontSize: 14,
+    color: '#6c757d',
+  },
+  characterCountError: {
+    color: 'red', // Change font color to red when characters exceed 280
   },
 });
 
-export default App;
+export default App;sdsd
