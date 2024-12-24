@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import ProfileVideoGrid from './ProfileVideoGrid';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -37,14 +38,16 @@ function App(): React.JSX.Element {
       />
       <Text style={styles.title}>Twitter-like Post Validation</Text>
 
+      <ProfileVideoGrid/>
+
       {/* Single TextInput for all text */}
       <TextInput
         style={[
           styles.textInput,
-          extraText.length > 0 && styles.textInputError, // Apply error styling if text exceeds 280
+          extraText.length > 0 && styles.textInputError, 
         ]}
         multiline
-        maxLength={MAX_CHARACTERS + 10} // Allow extra input to show feedback
+        maxLength={MAX_CHARACTERS + 10} 
         placeholder="What's happening?"
         value={text}
         onChangeText={setText}
@@ -107,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;sdsd
+export default App;
