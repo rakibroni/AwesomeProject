@@ -5,6 +5,7 @@ import LittleLemonHeader from './components/LittleLemonHeader';
 import LittleLemonFooter from './components/LittleLemonFooter';
 import MenuItems from './components/MenuItems';
 import SectionListMenuItems from './components/SectionListMenuItems';
+import FeedbackForm from './components/FeedbackForm';
 import WelcomeScreen from './WelcomeScreen';
 
 export default function App() {
@@ -12,7 +13,7 @@ export default function App() {
     <>
       <View style={styles.container}>
         <LittleLemonHeader />
-        <WelcomeScreen />
+        <FeedbackForm />
       </View>
       <View style={styles.footerContainer}>
         <LittleLemonFooter />
