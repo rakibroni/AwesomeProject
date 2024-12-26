@@ -8,6 +8,7 @@ import SectionListMenuItems from './components/SectionListMenuItems';
 import FeedbackForm from './components/FeedbackForm';
 import LoginScreen from './LoginScreen';
 import WelcomeScreen from './WelcomeScreen';
+import ImageList from './components/ImageList';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <View style={styles.container}>
         <LittleLemonHeader />
         <LoginScreen />
+        <ImageList />
       </View>
       <View style={styles.footerContainer}>
         <LittleLemonFooter />
