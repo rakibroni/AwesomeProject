@@ -1,50 +1,48 @@
-import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput } from 'react-native';
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  Text,
+  useColorScheme,
+} from 'react-native';
 
-export default function WelcomeScreen() {
-  const [firstName, onChangeFirstName] = useState('');
+const Welcome = () => {
+  const colorScheme = useColorScheme();
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.headerText}>Welcome to Little Lemon</Text>
-      <Text style={styles.regularText}>
-        Little Lemon is a charming neighborhood bistro that serves simple food
-        and classic cocktails in a lively but casual environment. We would love
-        to hear your experience with us!
-      </Text>
-      <TextInput
-        style={styles.inputBox}
-        value={firstName}
-        onChangeText={onChangeFirstName}
-        placeholder={'First Name'}
+    <ScrollView
+      style={[
+        styles.container,
+        colorScheme === 'light'
+          ? { backgroundColor: '#fff' }
+          : { backgroundColor: '#333333' },
+      ]}> 
+      <Image
+        style={styles.logo}
+        source={require('./img/logo.webp')}
+        resizeMode="center"
+        accessible={true}
+        accessibilityLabel={'Little Lemon Logo'}
       />
+      <Text style={styles.regular}>Color Scheme: {colorScheme}</Text>{' '}
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  logo: {
+    height: 100,
+    width: 300,
+  },
   container: {
     flex: 1,
+    padding: 24,
+    marginTop: 25,
   },
-  headerText: {
-    padding: 40,
-    fontSize: 30,
-    color: '#EDEFEE',
+  regular: {
+    fontSize: 18,
     textAlign: 'center',
-  },
-  regularText: {
-    fontSize: 24,
-    padding: 20,
-    marginVertical: 8,
-    color: '#EDEFEE',
-    textAlign: 'center',
-  },
-  inputBox: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    fontSize: 16,
-    borderColor: 'EDEFEE',
-    backgroundColor: '#EDEFEE',
   },
 });
+
+export default Welcome;
